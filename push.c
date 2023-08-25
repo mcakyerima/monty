@@ -1,40 +1,26 @@
 #include "monty.h"
 
 /**
- * push - Pushes an element onto the stack
- * @stack: A pointer to the top of the stack
- * @line_number: The current line number in the Monty file
+ * push - Pushes an element onto the stack.
+ * @stack: Double pointer to the stack.
+ * @value: The value to push onto the stack.
  */
-
-void push(stack_t **stack, unsigned int line_number)
+void push(stack_t **stack, int value)
 {
-    /* Read integer argument from Monty file */
-	char *argument = /* ... (Read argument from file) ... */;
-
-	if (argument == NULL)
-	{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-
-    /* Convert argument to integer */
-	int value = atoi(argument);
-
-    /* Create a new stack node */
 	stack_t *new_node = malloc(sizeof(stack_t));
 
-	if (new_node == NULL)
+	if (!new_node)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-
 	new_node->n = value;
 	new_node->prev = NULL;
-	new_node->next = *stack;
 
-	if (*stack != NULL)
+	if (*stack)
+	{
+		new_node->next = *stack;
 		(*stack)->prev = new_node;
-
+	}
 	*stack = new_node;
 }
